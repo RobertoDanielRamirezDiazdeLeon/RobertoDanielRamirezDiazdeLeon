@@ -1,5 +1,5 @@
 Autor: Roberto Daniel Ramírez Díaz de León
-05/09/2023 01:47:05 p. m.
+05/09/2023 01:50:07 p. m.
 # | Caracter
 include | Identificador
 < | OperadorRelacional
@@ -32,8 +32,6 @@ x25 | Identificador
 x26 | Identificador
 , | Caracter
 x27 | Identificador
-, | Caracter
-x28 | Identificador
 ; | FinSentencia
 void | Identificador
 main | Identificador
@@ -85,6 +83,5 @@ V a r i a b l e s
 -----------------
 x25 Float = 61
 x26 Float = 8
-x27 Float = 8
-x28 Float = 0
+x27 Float = 79
 -----------------
