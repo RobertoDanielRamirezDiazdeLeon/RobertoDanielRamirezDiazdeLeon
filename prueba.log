@@ -1,0 +1,12 @@
+# | Caracter
+include | Identificador
+< | OperadorRelacional
+string | Identificador
+. | Caracter
+h | Identificador
+> | OperadorRelacional
+{ | Inicio
+char | TipoDato
+, | Caracter
+private | Zona
+} | Fin

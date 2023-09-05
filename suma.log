@@ -1,0 +1,60 @@
+Autor: Roberto Daniel Ramírez Díaz de León
+04/09/2023 01:12:00 p. m.
+# | Caracter
+include | Identificador
+< | OperadorRelacional
+stdio | Identificador
+. | Caracter
+h | Identificador
+> | OperadorRelacional
+# | Caracter
+include | Identificador
+< | OperadorRelacional
+math | Identificador
+. | Caracter
+h | Identificador
+> | OperadorRelacional
+# | Caracter
+include | Identificador
+< | OperadorRelacional
+iostream | Identificador
+> | OperadorRelacional
+# | Caracter
+include | Identificador
+< | OperadorRelacional
+conio | Identificador
+. | Caracter
+h | Identificador
+> | OperadorRelacional
+float | TipoDato
+x26 | Identificador
+; | FinSentencia
+void | Identificador
+main | Identificador
+( | Caracter
+) | Caracter
+{ | Inicio
+x26 | Identificador
+= | Asignacion
+( | Caracter
+3 | Numero
++ | OperadorTermino
+5 | Numero
+) | Caracter
+* | OperadorFactor
+8 | Numero
+- | OperadorTermino
+( | Caracter
+10 | Numero
+- | OperadorTermino
+4 | Numero
+) | Caracter
+/ | OperadorFactor
+2 | Numero
+; | FinSentencia
+} | Fin
+-----------------
+V a r i a b l e s
+-----------------
+x26 Float = 0
+-----------------
