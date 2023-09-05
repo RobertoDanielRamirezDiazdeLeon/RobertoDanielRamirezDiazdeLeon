@@ -13,13 +13,16 @@ namespace Sintaxis_2
     public class Lenguaje : Sintaxis
     {
         List<Variable> lista;
+        Stack<float> stack;
         public Lenguaje()
         {
             lista = new List<Variable>();
+            stack = new Stack<float>();
         }
         public Lenguaje(string nombre) : base(nombre)
         {
             lista = new List<Variable>();
+            stack = new Stack<float>();
         }
 
         //Programa  -> Librerias? Variables? Main
@@ -59,6 +62,29 @@ namespace Sintaxis_2
                 }
             }
             return false;
+        }
+
+        private void Modifica(string nombre, float nuevoValor)
+        {
+            foreach (Variable v in lista)
+            {
+                if(v.getNombre() == nombre)
+                {
+                    v.setValor(nuevoValor);
+                }
+            }
+        }
+
+        private float getValor(string nombre)
+        {
+            foreach (Variable v in lista)
+            {
+                if (v.getNombre() == nombre)
+                {
+                    return v.getValor();
+                }
+            }
+            return 0;
         }
 
         // Libreria -> #include<Identificador(.h)?>
@@ -179,7 +205,8 @@ namespace Sintaxis_2
             {
                 throw new Error("de sintaxis, la variable <" + getContenido() + "> no está declarada", log, linea, columna);
             }
-            Console.Write(getContenido() + " = ");
+            log.Write(getContenido() + " = ");
+            string variable = getContenido();
             match(Tipos.Identificador);
             if (getContenido() == "=")
             {
@@ -222,7 +249,9 @@ namespace Sintaxis_2
                 }
                 Expresion();
             }
-            Console.WriteLine();
+            float resultado = stack.Pop();
+            log.WriteLine(" = "+resultado);
+            Modifica(variable,resultado);
             match(";");
         }
         //While -> while(Condicion) BloqueInstrucciones | Instruccion
@@ -297,11 +326,24 @@ namespace Sintaxis_2
             }
         }
         //Condicion -> Expresion OperadorRelacional Expresion
-        private void Condicion()
+        private bool Condicion()
         {
             Expresion();
+            string operador = getContenido();
             match(Tipos.OperadorRelacional);
             Expresion();
+            float R1 = stack.Pop();
+            float R2 = stack.Pop();
+
+            switch(operador)
+            {
+                case "==": return R2 == R1;
+                case ">" : return R2 > R1;
+                case ">=": return R2 >= R1;
+                case "<" : return R2 < R1;
+                case "<=": return R2 <= R1;
+                default  : return R2 != R1;
+            }
         }
         //If -> if (Condicion) BloqueInstrucciones | Instruccion (else BloqueInstrucciones | Instruccion)?
         private void If()
@@ -364,7 +406,10 @@ namespace Sintaxis_2
             {
                 throw new Error("de sintaxis, la variable <" + getContenido() + "> no está declarada", log, linea, columna);
             }
+            string variable = getContenido();
             match(Tipos.Identificador);
+            float captura = float.Parse(Console.ReadLine());
+            Modifica(variable,captura);
             match(")");
             match(";");
         }
@@ -392,6 +437,12 @@ namespace Sintaxis_2
                 match(Tipos.OperadorTermino);
                 Termino();
                 log.Write(" " + operador);
+                float R2 = stack.Pop();
+                float R1 = stack.Pop();
+                if (operador == "+")
+                    stack.Push(R1+R2);
+                else
+                    stack.Push(R1-R2);
             }
         }
         //Termino -> Factor PorFactor
@@ -409,6 +460,12 @@ namespace Sintaxis_2
                 match(Tipos.OperadorFactor);
                 Factor();
                 log.Write(" " + operador);
+                float R2 = stack.Pop();
+                float R1 = stack.Pop();
+                if (operador == "*")
+                    stack.Push(R1*R2);
+                else
+                    stack.Push(R1/R2);
             }
         }
         //Factor -> numero | identificador | (Expresion)
@@ -417,6 +474,7 @@ namespace Sintaxis_2
             if (getClasificacion() == Tipos.Numero)
             {
                 log.Write(" " + getContenido());
+                stack.Push(float.Parse(getContenido()));
                 match(Tipos.Numero);
             }
             else if (getClasificacion() == Tipos.Identificador)

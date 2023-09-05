@@ -1,5 +1,5 @@
 Autor: Roberto Daniel Ramírez Díaz de León
-04/09/2023 01:12:00 p. m.
+05/09/2023 01:47:05 p. m.
 # | Caracter
 include | Identificador
 < | OperadorRelacional
@@ -27,34 +27,64 @@ conio | Identificador
 h | Identificador
 > | OperadorRelacional
 float | TipoDato
+x25 | Identificador
+, | Caracter
 x26 | Identificador
+, | Caracter
+x27 | Identificador
+, | Caracter
+x28 | Identificador
 ; | FinSentencia
 void | Identificador
 main | Identificador
 ( | Caracter
 ) | Caracter
 { | Inicio
-x26 | Identificador
-= | Asignacion
+x25 | Identificador
+x25 = = | Asignacion
 ( | Caracter
 3 | Numero
-+ | OperadorTermino
+ 3+ | OperadorTermino
 5 | Numero
-) | Caracter
-* | OperadorFactor
+ 5) | Caracter
+ +* | OperadorFactor
 8 | Numero
-- | OperadorTermino
-( | Caracter
+ 8- | OperadorTermino
+ *( | Caracter
 10 | Numero
-- | OperadorTermino
+ 10- | OperadorTermino
 4 | Numero
-) | Caracter
-/ | OperadorFactor
+ 4) | Caracter
+ -/ | OperadorFactor
 2 | Numero
+ 2; | FinSentencia
+ / - = 61
+x26 | Identificador
+x26 = = | Asignacion
+3 | Numero
+ 3+ | OperadorTermino
+5 | Numero
+ 5; | FinSentencia
+ + = 8
+printf | Identificador
+( | Caracter
+"Valor de x27 = " | Cadena
+) | Caracter
+; | FinSentencia
+scanf | Identificador
+( | Caracter
+"%f" | Cadena
+, | Caracter
+& | Caracter
+x27 | Identificador
+) | Caracter
 ; | FinSentencia
 } | Fin
 -----------------
 V a r i a b l e s
 -----------------
-x26 Float = 0
+x25 Float = 61
+x26 Float = 8
+x27 Float = 8
+x28 Float = 0
 -----------------
