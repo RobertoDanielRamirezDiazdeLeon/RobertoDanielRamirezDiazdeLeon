@@ -1,5 +1,5 @@
 Autor: Roberto Daniel Ramírez Díaz de León
-05/09/2023 01:50:07 p. m.
+06/09/2023 02:21:12 p. m.
 # | Caracter
 include | Identificador
 < | OperadorRelacional
@@ -27,19 +27,21 @@ conio | Identificador
 h | Identificador
 > | OperadorRelacional
 float | TipoDato
-x25 | Identificador
+a | Identificador
 , | Caracter
-x26 | Identificador
+b | Identificador
 , | Caracter
-x27 | Identificador
+c | Identificador
+, | Caracter
+d | Identificador
 ; | FinSentencia
 void | Identificador
 main | Identificador
 ( | Caracter
 ) | Caracter
 { | Inicio
-x25 | Identificador
-x25 = = | Asignacion
+a | Identificador
+a = = | Asignacion
 ( | Caracter
 3 | Numero
  3+ | OperadorTermino
@@ -57,16 +59,14 @@ x25 = = | Asignacion
 2 | Numero
  2; | FinSentencia
  / - = 61
-x26 | Identificador
-x26 = = | Asignacion
-3 | Numero
- 3+ | OperadorTermino
-5 | Numero
- 5; | FinSentencia
- + = 8
+b | Identificador
+b = = | Asignacion
+8 | Numero
+ 8; | FinSentencia
+ = 8
 printf | Identificador
 ( | Caracter
-"Valor de x27 = " | Cadena
+"Valor de c = " | Cadena
 ) | Caracter
 ; | FinSentencia
 scanf | Identificador
@@ -74,14 +74,52 @@ scanf | Identificador
 "%f" | Cadena
 , | Caracter
 & | Caracter
-x27 | Identificador
+c | Identificador
 ) | Caracter
 ; | FinSentencia
+if | Condicion
+( | Caracter
+1 | Numero
+ 1== | OperadorRelacional
+1 | Numero
+ 1) | Caracter
+{ | Inicio
+if | Condicion
+( | Caracter
+1 | Numero
+ 1== | OperadorRelacional
+1 | Numero
+ 1) | Caracter
+if | Condicion
+( | Caracter
+2 | Numero
+ 2== | OperadorRelacional
+2 | Numero
+ 2) | Caracter
+if | Condicion
+( | Caracter
+3 | Numero
+ 3== | OperadorRelacional
+3 | Numero
+ 3) | Caracter
+if | Condicion
+( | Caracter
+4 | Numero
+ 4== | OperadorRelacional
+4 | Numero
+ 4) | Caracter
+printf | Identificador
+( | Caracter
+"1 == 2" | Cadena
+) | Caracter
+; | FinSentencia
+} | Fin
 } | Fin
 -----------------
 V a r i a b l e s
 -----------------
-x25 Float = 61
-x26 Float = 8
-x27 Float = 79
+a Float = 61
+b Float = 8
+c Float = 8
+d Float = 0
 -----------------
