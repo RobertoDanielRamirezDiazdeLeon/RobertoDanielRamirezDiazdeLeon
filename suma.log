@@ -1,5 +1,5 @@
 Autor: Roberto Daniel Ramírez Díaz de León
-06/09/2023 02:21:12 p. m.
+09/09/2023 05:17:34 p. m.
 # | Caracter
 include | Identificador
 < | OperadorRelacional
@@ -19,21 +19,12 @@ include | Identificador
 < | OperadorRelacional
 iostream | Identificador
 > | OperadorRelacional
-# | Caracter
-include | Identificador
-< | OperadorRelacional
-conio | Identificador
-. | Caracter
-h | Identificador
-> | OperadorRelacional
 float | TipoDato
 a | Identificador
 , | Caracter
 b | Identificador
 , | Caracter
 c | Identificador
-, | Caracter
-d | Identificador
 ; | FinSentencia
 void | Identificador
 main | Identificador
@@ -67,6 +58,8 @@ b = = | Asignacion
 printf | Identificador
 ( | Caracter
 "Valor de c = " | Cadena
+, | Caracter
+c | Identificador
 ) | Caracter
 ; | FinSentencia
 scanf | Identificador
@@ -79,47 +72,81 @@ c | Identificador
 ; | FinSentencia
 if | Condicion
 ( | Caracter
-1 | Numero
- 1== | OperadorRelacional
-1 | Numero
- 1) | Caracter
-{ | Inicio
-if | Condicion
-( | Caracter
-1 | Numero
- 1== | OperadorRelacional
-1 | Numero
- 1) | Caracter
-if | Condicion
-( | Caracter
+c | Identificador
+% | OperadorFactor
 2 | Numero
  2== | OperadorRelacional
-2 | Numero
- 2) | Caracter
-if | Condicion
-( | Caracter
-3 | Numero
- 3== | OperadorRelacional
-3 | Numero
- 3) | Caracter
-if | Condicion
-( | Caracter
-4 | Numero
- 4== | OperadorRelacional
-4 | Numero
- 4) | Caracter
+ %0 | Numero
+ 0) | Caracter
+{ | Inicio
 printf | Identificador
 ( | Caracter
-"1 == 2" | Cadena
+"\nc es par\t\tITQ\n" | Cadena
+) | Caracter
+; | FinSentencia
+if | Condicion
+( | Caracter
+c | Identificador
+== | OperadorRelacional
+10 | Numero
+ 10) | Caracter
+printf | Identificador
+( | Caracter
+"El valor de c = " | Cadena
+, | Caracter
+c | Identificador
 ) | Caracter
 ; | FinSentencia
 } | Fin
+else | Condicion
+{ | Inicio
+printf | Identificador
+( | Caracter
+"\nc es impar\t\tITQ\n" | Cadena
+) | Caracter
+; | FinSentencia
+} | Fin
+b | Identificador
+b = ++ | IncrementoTermino
+; | FinSentencia
+ = 9
+c | Identificador
+c = -- | IncrementoTermino
+; | FinSentencia
+ = 14
+c | Identificador
+c = += | IncrementoTermino
+( | Caracter
+10 | Numero
+ 10- | OperadorTermino
+b | Identificador
+) | Caracter
+ -; | FinSentencia
+ = 18
+b | Identificador
+b = -= | IncrementoTermino
+9 | Numero
+ 9; | FinSentencia
+ = 0
+printf | Identificador
+( | Caracter
+"El valor de a = " | Cadena
+, | Caracter
+a | Identificador
+) | Caracter
+; | FinSentencia
+printf | Identificador
+( | Caracter
+"El valor de b = " | Cadena
+, | Caracter
+b | Identificador
+) | Caracter
+; | FinSentencia
 } | Fin
 -----------------
 V a r i a b l e s
 -----------------
 a Float = 61
-b Float = 8
-c Float = 8
-d Float = 0
+b Float = 0
+c Float = 18
 -----------------

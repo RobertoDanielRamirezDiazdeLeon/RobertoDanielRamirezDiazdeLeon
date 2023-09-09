@@ -229,6 +229,7 @@ namespace Sintaxis_2
                 {
                     match("--");
                     resultado = getValor(variable) - 1;
+                    //stack.Push(resultado = getValor(variable) - 1);
                 }
                 else if (getContenido() == "+=")
                 {
@@ -236,16 +237,19 @@ namespace Sintaxis_2
                     Expresion();
                     resultado = stack.Pop();
                     resultado += getValor(variable);
+                    //stack.Push(resultado+= getValor(variable));
                 }
                 else if (getContenido() == "-=")
                 {
                     match("-=");
                     Expresion();
                     resultado = stack.Pop();
-                    resultado -= getValor(variable);
+                    resultado = getValor(variable) - resultado;
+                    //stack.Push(resultado = getValor(variable) - resultado);
                 }
                 
             }
+
             else if (getClasificacion() == Tipos.IncrementoFactor){
                 if (getContenido() == "*=")
                 {
@@ -258,19 +262,20 @@ namespace Sintaxis_2
                 {
                     match("/=");Expresion();
                     resultado = stack.Pop();
-                    resultado /= getValor(variable);
+                    resultado = getValor(variable)/resultado;
                 }
                 else if (getContenido() == "%=")
                 {
                     match("%=");
                     Expresion();
                     resultado = stack.Pop();
-                    resultado %= getValor(variable);
+                    resultado = getValor(variable)%resultado;
                 }
             }
             log.WriteLine(" = " + resultado);
             if (ejecuta)
             {
+                stack.Push(resultado);
                 Modifica(variable,resultado);
             }
             match(";");
@@ -385,14 +390,17 @@ namespace Sintaxis_2
             if (getContenido() == "else")
             {
                 match("else");
-
+                bool evaluacion2 = evaluacion && ejecuta;
+                Console.WriteLine(!evaluacion2);
                 if (getContenido() == "{")
                 {
-                    BloqueInstrucciones(ejecuta);
+                    if(evaluacion == false)
+                        BloqueInstrucciones(!evaluacion2);
                 }
                 else
                 {
-                    Instruccion(ejecuta);
+                    if(evaluacion == false)
+                        Instruccion(!evaluacion2);
                 }
             }
 
@@ -404,9 +412,7 @@ namespace Sintaxis_2
             match("(");
             if (ejecuta)
             {
-                
                 Console.Write(getContenido().Replace("\"","").Replace("\\n","\n").Replace("\\t","\t"));
-           
             }
             match(Tipos.Cadena);
             if (getContenido() == ",")
@@ -438,12 +444,19 @@ namespace Sintaxis_2
             if (ejecuta)
             {
                 string captura = "" + Console.ReadLine();
-                float resultado = float.Parse(captura);
-                Modifica(variable,resultado);
+                float resultado;
+                if (!float.TryParse(captura, out resultado)) {
+                    throw new Error("de sintaxis, no se puede capturar una cadena", log, linea, columna);
+                }
+                else{
+                    stack.Push(float.Parse(captura));
+                    Modifica(variable,resultado);
+                }
+                
             }
             match(")");
             match(";");
-        }
+        }
         //Main -> void main() BloqueInstrucciones
         private void Main(bool ejecuta)
         {
