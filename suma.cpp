@@ -8,21 +8,20 @@ void main() // Funcion principal
 {
     a=(3+5)*8-(10-4)/2;
     b=8;
-    printf("Valor de c = ",c);
+    printf("Valor de c = ");
     scanf("%f",&c);
     if (c%2==0)
     {
         printf("\nc es par\t\tITQ\n");
         if (c==10)
             printf("El valor de c = ",c);
+        else 
+            printf("HOLA");
     }
-    else {
+    else
+    {
         printf("\nc es impar\t\tITQ\n");
     }
-        
-    
-        
-    
     b++;
     c--;
     c+=(10-b);

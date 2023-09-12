@@ -374,9 +374,10 @@ namespace Sintaxis_2
         //If -> if (Condicion) BloqueInstrucciones | Instruccion (else BloqueInstrucciones | Instruccion)?
         private void If(bool ejecuta)
         {
+            bool evaluacion = false;
             match("if");
             match("(");
-            bool evaluacion = Condicion() && ejecuta;
+            evaluacion = Condicion() && ejecuta;
             Console.WriteLine(evaluacion);
             match(")");
             if (getContenido() == "{")
@@ -387,20 +388,23 @@ namespace Sintaxis_2
             {
                 Instruccion(evaluacion);
             }
+
+
             if (getContenido() == "else")
             {
                 match("else");
-                bool evaluacion2 = evaluacion && ejecuta;
-                Console.WriteLine(!evaluacion2);
+                bool evaluacion2 = false;
+                if(evaluacion == false){
+                    evaluacion2 = !evaluacion;
+                }
+                Console.WriteLine(evaluacion2);
                 if (getContenido() == "{")
                 {
-                    if(evaluacion == false)
-                        BloqueInstrucciones(!evaluacion2);
+                    BloqueInstrucciones(evaluacion2);
                 }
                 else
                 {
-                    if(evaluacion == false)
-                        Instruccion(!evaluacion2);
+                    Instruccion(evaluacion2);
                 }
             }
 
@@ -422,6 +426,8 @@ namespace Sintaxis_2
                 {
                     throw new Error("de sintaxis, la variable <" + getContenido() + "> no está declarada", log, linea, columna);
                 }
+                if(ejecuta)
+                    Console.WriteLine(getValor(getContenido()));
                 match(Tipos.Identificador);
             }
             match(")");
@@ -444,7 +450,7 @@ namespace Sintaxis_2
             if (ejecuta)
             {
                 string captura = "" + Console.ReadLine();
-                float resultado;
+                float resultado =0;
                 if (!float.TryParse(captura, out resultado)) {
                     throw new Error("de sintaxis, no se puede capturar una cadena", log, linea, columna);
                 }
@@ -529,7 +535,9 @@ namespace Sintaxis_2
                 {
                     throw new Error("de sintaxis, la variable <" + getContenido() + "> no está declarada", log, linea, columna);
                 }
+                stack.Push(getValor(getContenido()));
                 match(Tipos.Identificador);
+                
             }
             else
             {
