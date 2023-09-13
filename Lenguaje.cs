@@ -180,7 +180,7 @@ namespace Sintaxis_2
             {
                 Scanf(ejecuta);
             }
-             else if (getContenido() == "if")
+            else if (getContenido() == "if")
             {
                 If(ejecuta);
             }
@@ -247,10 +247,11 @@ namespace Sintaxis_2
                     resultado = getValor(variable) - resultado;
                     //stack.Push(resultado = getValor(variable) - resultado);
                 }
-                
+
             }
 
-            else if (getClasificacion() == Tipos.IncrementoFactor){
+            else if (getClasificacion() == Tipos.IncrementoFactor)
+            {
                 if (getContenido() == "*=")
                 {
                     match("*=");
@@ -260,26 +261,26 @@ namespace Sintaxis_2
                 }
                 else if (getContenido() == "/=")
                 {
-                    match("/=");Expresion();
+                    match("/="); Expresion();
                     resultado = stack.Pop();
-                    resultado = getValor(variable)/resultado;
+                    resultado = getValor(variable) / resultado;
                 }
                 else if (getContenido() == "%=")
                 {
                     match("%=");
                     Expresion();
                     resultado = stack.Pop();
-                    resultado = getValor(variable)%resultado;
+                    resultado = getValor(variable) % resultado;
                 }
             }
             log.WriteLine(" = " + resultado);
             if (ejecuta)
             {
                 stack.Push(resultado);
-                Modifica(variable,resultado);
+                Modifica(variable, resultado);
             }
             match(";");
-        }
+        }
         //While -> while(Condicion) BloqueInstrucciones | Instruccion
         private void While(bool ejecuta)
         {
@@ -363,22 +364,20 @@ namespace Sintaxis_2
 
             switch (operador)
             {
-                case "==" : return R2==R1;
-                case ">"  : return R2>R1;
-                case ">=" : return R2>=R1;
-                case "<"  : return R2<R1;
-                case "<=" : return R2<=R1;
-                default   : return R2!=R1;
+                case "==": return R2 == R1;
+                case ">": return R2 > R1;
+                case ">=": return R2 >= R1;
+                case "<": return R2 < R1;
+                case "<=": return R2 <= R1;
+                default: return R2 != R1;
             }
         }
         //If -> if (Condicion) BloqueInstrucciones | Instruccion (else BloqueInstrucciones | Instruccion)?
         private void If(bool ejecuta)
         {
-            bool evaluacion = false;
             match("if");
             match("(");
-            evaluacion = Condicion() && ejecuta;
-            Console.WriteLine(evaluacion);
+            bool evaluacion = Condicion() && ejecuta;
             match(")");
             if (getContenido() == "{")
             {
@@ -388,26 +387,21 @@ namespace Sintaxis_2
             {
                 Instruccion(evaluacion);
             }
-
-
             if (getContenido() == "else")
             {
                 match("else");
-                bool evaluacion2 = false;
-                if(evaluacion == false){
-                    evaluacion2 = !evaluacion;
-                }
-                Console.WriteLine(evaluacion2);
-                if (getContenido() == "{")
+                if (ejecuta)
                 {
-                    BloqueInstrucciones(evaluacion2);
-                }
-                else
-                {
-                    Instruccion(evaluacion2);
+                    if (getContenido() == "{")
+                    {
+                        BloqueInstrucciones(!evaluacion);
+                    }
+                    else
+                    {
+                        Instruccion(!evaluacion);
+                    }
                 }
             }
-
         }
         //Printf -> printf(cadena(,Identificador)?);
         private void Printf(bool ejecuta)
@@ -416,7 +410,7 @@ namespace Sintaxis_2
             match("(");
             if (ejecuta)
             {
-                Console.Write(getContenido().Replace("\"","").Replace("\\n","\n").Replace("\\t","\t"));
+                Console.Write(getContenido().Replace("\"", "").Replace("\\n", "\n").Replace("\\t", "\t"));
             }
             match(Tipos.Cadena);
             if (getContenido() == ",")
@@ -426,7 +420,7 @@ namespace Sintaxis_2
                 {
                     throw new Error("de sintaxis, la variable <" + getContenido() + "> no está declarada", log, linea, columna);
                 }
-                if(ejecuta)
+                if (ejecuta)
                     Console.WriteLine(getValor(getContenido()));
                 match(Tipos.Identificador);
             }
@@ -450,19 +444,21 @@ namespace Sintaxis_2
             if (ejecuta)
             {
                 string captura = "" + Console.ReadLine();
-                float resultado =0;
-                if (!float.TryParse(captura, out resultado)) {
+                float resultado = 0;
+                if (!float.TryParse(captura, out resultado))
+                {
                     throw new Error("de sintaxis, no se puede capturar una cadena", log, linea, columna);
                 }
-                else{
+                else
+                {
                     stack.Push(float.Parse(captura));
-                    Modifica(variable,resultado);
+                    Modifica(variable, resultado);
                 }
-                
+
             }
             match(")");
             match(";");
-        }
+        }
         //Main -> void main() BloqueInstrucciones
         private void Main(bool ejecuta)
         {
@@ -490,9 +486,9 @@ namespace Sintaxis_2
                 float R2 = stack.Pop();
                 float R1 = stack.Pop();
                 if (operador == "+")
-                    stack.Push(R1+R2);
+                    stack.Push(R1 + R2);
                 else
-                    stack.Push(R1-R2);
+                    stack.Push(R1 - R2);
             }
         }
         //Termino -> Factor PorFactor
@@ -513,11 +509,11 @@ namespace Sintaxis_2
                 float R2 = stack.Pop();
                 float R1 = stack.Pop();
                 if (operador == "*")
-                    stack.Push(R1*R2);
+                    stack.Push(R1 * R2);
                 else if (operador == "%")
-                    stack.Push(R1%R2);
+                    stack.Push(R1 % R2);
                 else
-                    stack.Push(R1/R2);
+                    stack.Push(R1 / R2);
             }
         }
         //Factor -> numero | identificador | (Expresion)
@@ -537,7 +533,7 @@ namespace Sintaxis_2
                 }
                 stack.Push(getValor(getContenido()));
                 match(Tipos.Identificador);
-                
+
             }
             else
             {
