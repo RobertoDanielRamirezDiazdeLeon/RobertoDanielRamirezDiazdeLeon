@@ -10,7 +10,7 @@ void main()
     
     printf("\nValor de altura = ");
     scanf("%i",&altura);
-
+    print(altura);
     for (i = 1; i <= altura; i++)
     {
         if (i == 5)

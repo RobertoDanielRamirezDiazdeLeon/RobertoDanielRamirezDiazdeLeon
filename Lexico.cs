@@ -58,14 +58,15 @@ namespace Sintaxis_2
           // WS  L  D  .  =  :  ;  &  |  >  <  !  +  -  *  /  %  "  ' EOF ?  # lmd {  }  \n
           // 0   1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         };
-        private StreamReader archivo;
+        protected StreamReader archivo;
         protected StreamWriter log;
         DateTime myValue = DateTime.Now;
         protected int linea;
         protected int columna;
+        protected int caracter;
         public Lexico()
         {
-            linea = columna = 1;
+            linea = columna = caracter = 1;
             log = new StreamWriter("prueba.log");
             log.WriteLine("Autor: Roberto Daniel Ramírez Díaz de León");
             log.WriteLine(myValue.ToShortDateString() + " " + myValue.ToLongTimeString());
@@ -81,7 +82,7 @@ namespace Sintaxis_2
         }
         public Lexico(string nombre)
         {
-            linea = columna = 1;
+            linea = columna = caracter = 1;
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.WriteLine("Autor: Roberto Daniel Ramírez Díaz de León");
             log.WriteLine(myValue.ToShortDateString() + " " + myValue.ToLongTimeString());
@@ -241,7 +242,9 @@ namespace Sintaxis_2
                 if (Estado >= 0)
                 {
                     archivo.Read();
+                    caracter++;
                     columna++;
+
                     if (Estado > 0)
                     {
                         buffer += c;
