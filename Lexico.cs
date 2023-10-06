@@ -286,7 +286,7 @@ namespace Sintaxis_2
             }
             if (!FinArchivo())
             {
-                log.WriteLine(getContenido() + " | " + getClasificacion());
+                //log.WriteLine(getContenido() + " | " + getClasificacion());
             }
             if (Estado == E)
             {

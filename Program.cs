@@ -14,10 +14,10 @@ namespace Sintaxis_2
                 {
                     L.Programa();
                     
-                    while (!L.FinArchivo())
-                    {
-                        L.nextToken();
-                    }
+                    //while (!L.FinArchivo())
+                    //{
+                        //L.nextToken();
+                    //}
                     
                 }
             } 

@@ -298,6 +298,7 @@ namespace Sintaxis_2
                     resultado = getValor(variable) % resultado;
                 }
             }
+            log.WriteLine(" = " + resultado);
             if (ejecuta)
             {
                 Variable.TiposDatos tipoDatoVariable = getTipo(variable);
@@ -432,17 +433,18 @@ namespace Sintaxis_2
             {
                 throw new Error("de sintaxis, la variable <" + getContenido() + "> no está declarada", log, linea, columna);
             }
+            stack.Push(getValor(getContenido()));
             string variable = getContenido();
             match(Tipos.Identificador);
             if (getContenido() == "++")
             {
                 match("++");
-                resultado = getValor(variable) + 1;
+                resultado = stack.Pop()  + 1;
             }
             else
             {
                 match("--");
-                resultado = getValor(variable) - 1;
+                resultado = stack.Pop() - 1;
             }
             return resultado;
         }
@@ -634,6 +636,7 @@ namespace Sintaxis_2
         {
             if (getClasificacion() == Tipos.Numero)
             {
+                log.Write(" " + getContenido());
                 stack.Push(float.Parse(getContenido()));
                 if (tipoDatoExpresion < getTipo(float.Parse(getContenido())))
                 {
