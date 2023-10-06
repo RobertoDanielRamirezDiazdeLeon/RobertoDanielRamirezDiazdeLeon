@@ -300,29 +300,30 @@ namespace Sintaxis_2
             }
             if (ejecuta)
             {
-                Variable.TiposDatos tipoDatoVariable  = getTipo(variable);
+                Variable.TiposDatos tipoDatoVariable = getTipo(variable);
                 Variable.TiposDatos tipoDatoResultado = getTipo(resultado);
 
                 if (tipoDatoVariable >= tipoDatoResultado)
                 {
-                    Modifica(variable,resultado);                   
+                    //tipoDatoExpresion = tipoDatoResultado;
+                    Modifica(variable, resultado);
                 }
                 else
                 {
-                    throw new Error("de semantica, no se puede asignar in <" + tipoDatoResultado + "> a un <"+ tipoDatoVariable + ">", log, linea, columna);
+                    throw new Error("de semantica, no se puede asignar in <" + tipoDatoResultado + "> a un <" + tipoDatoVariable + ">", log, linea, columna);
                 }
             }
             match(";");
         }
         //While -> while(Condicion) BloqueInstrucciones | Instruccion
         private void While(bool ejecuta)
-        {   
-            int inicia = caracter;
-            int lineaInicio = linea;
-            match("while");
-            match("(");
-            
-            do{
+        {
+            do
+            {
+                int inicia = caracter;
+                int lineaInicio = linea;
+                match("while");
+                match("(");
                 ejecuta = Condicion() && ejecuta;
                 match(")");
                 if (getContenido() == "{")
@@ -336,22 +337,23 @@ namespace Sintaxis_2
                 if (ejecuta)
                 {
                     archivo.DiscardBufferedData();
-                    caracter = inicia + 1;
+                    caracter = inicia - 5;
                     archivo.BaseStream.Seek(caracter, SeekOrigin.Begin);
                     nextToken();
                     linea = lineaInicio;
                 }
             }
-            while(ejecuta);
+            while (ejecuta);
         }
 
         //Do -> do BloqueInstrucciones | Instruccion while(Condicion)
         private void Do(bool ejecuta)
         {
-            int inicia = caracter;
-            int lineaInicio = linea;
-            match("do");
-            do{
+            do
+            {
+                int inicia = caracter;
+                int lineaInicio = linea;
+                match("do");
                 if (getContenido() == "{")
                 {
                     BloqueInstrucciones(ejecuta);
@@ -368,14 +370,14 @@ namespace Sintaxis_2
                 if (ejecuta)
                 {
                     archivo.DiscardBufferedData();
-                    caracter = inicia;
+                    caracter = inicia - 2;
                     archivo.BaseStream.Seek(caracter, SeekOrigin.Begin);
                     nextToken();
                     linea = lineaInicio;
                 }
             }
-            while(ejecuta);
-            
+            while (ejecuta);
+
         }
         //For -> for(Asignacion Condicion; Incremento) BloqueInstrucciones | Instruccion
         private void For(bool ejecuta)
@@ -383,7 +385,7 @@ namespace Sintaxis_2
             match("for");
             match("(");
             Asignacion(ejecuta);
-            
+
             int inicia = caracter;
             int lineaInicio = linea;
             float resultado = 0;
@@ -405,7 +407,14 @@ namespace Sintaxis_2
                 }
                 if (ejecuta)
                 {
-                    Modifica(variable, resultado);
+                    if (getTipo(variable) >= getTipo(resultado))
+                    {
+                        Modifica(variable, resultado);
+                    }
+                    else
+                    {
+                        throw new Error("de semantica, no se puede asignar un <" + getTipo(resultado) + "> a un <" + getTipo(variable) + ">", log, linea, columna);
+                    }
                     archivo.DiscardBufferedData();
                     caracter = inicia - variable.Length - 1;
                     archivo.BaseStream.Seek(caracter, SeekOrigin.Begin);
@@ -475,7 +484,8 @@ namespace Sintaxis_2
             if (getContenido() == "else")
             {
                 match("else");
-                if(ejecuta){
+                if (ejecuta)
+                {
                     if (getContenido() == "{")
                     {
                         BloqueInstrucciones(!evaluacion);
@@ -485,8 +495,10 @@ namespace Sintaxis_2
                         Instruccion(!evaluacion);
                     }
                 }
-                else{
-                    if(getContenido() == "{"){
+                else
+                {
+                    if (getContenido() == "{")
+                    {
                         BloqueInstrucciones(evaluacion);
                     }
                     else
@@ -546,8 +558,15 @@ namespace Sintaxis_2
                 }
                 else
                 {
-                    stack.Push(float.Parse(captura));
-                    Modifica(variable, resultado);
+                    if (getTipo(variable) >= getTipo(resultado))
+                    {
+                        stack.Push(float.Parse(captura));
+                        Modifica(variable, resultado);
+                    }
+                    else
+                    {
+                        throw new Error("de semantica, no se puede asignar in <" + getTipo(resultado) + "> a un <" + getTipo(variable) + ">", log, linea, columna);
+                    }
                 }
             }
             match(")");
@@ -615,8 +634,9 @@ namespace Sintaxis_2
         {
             if (getClasificacion() == Tipos.Numero)
             {
-                stack.Push(float.Parse(getContenido()));            
-                if(tipoDatoExpresion < getTipo(float.Parse(getContenido()))){
+                stack.Push(float.Parse(getContenido()));
+                if (tipoDatoExpresion < getTipo(float.Parse(getContenido())))
+                {
                     tipoDatoExpresion = getTipo(float.Parse(getContenido()));
                 }
                 match(Tipos.Numero);
@@ -644,10 +664,12 @@ namespace Sintaxis_2
                     huboCast = true;
                     switch (getContenido())
                     {
-                        case "int"  : tipoDatoCast = Variable.TiposDatos.Int;
-                                        break;
-                        case "float": tipoDatoCast = Variable.TiposDatos.Float;
-                                        break;
+                        case "int":
+                            tipoDatoCast = Variable.TiposDatos.Int;
+                            break;
+                        case "float":
+                            tipoDatoCast = Variable.TiposDatos.Float;
+                            break;
                     }
                     match(Tipos.TipoDato);
                     match(")");
@@ -658,21 +680,26 @@ namespace Sintaxis_2
                 if (huboCast)
                 {
                     tipoDatoExpresion = tipoDatoCast;
-                    stack.Push(castea(stack.Pop(),tipoDatoCast));
+                    stack.Push(castea(stack.Pop(), tipoDatoCast));
                 }
             }
         }
 
+        //Castear
         float castea(float resultado, Variable.TiposDatos tipoDato)
         {
-            float residuo = 0;
-            if (tipoDato == Variable.TiposDatos.Int){
-                residuo = resultado % 65535;
-            } 
-            else if (tipoDato == Variable.TiposDatos.Char){
-                residuo = resultado % 255;
+            if (tipoDato == Variable.TiposDatos.Int)
+            {
+                resultado = (float)Math.Round(resultado);
+                resultado = resultado % 65536;
             }
-            return residuo;
+            else if (tipoDato == Variable.TiposDatos.Char)
+            {
+                resultado = (float)Math.Round(resultado);
+                resultado = resultado % 256;
+            }
+
+            return resultado;
         }
     }
 }
