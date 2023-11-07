@@ -1015,7 +1015,7 @@ namespace Sintaxis_2
                 asm.WriteLine("DIV BX");
                 
                 asm.WriteLine("PUSH DX");
-
+                asm.WriteLine("XOR DX, DX");
             }
 
             return resultado;
