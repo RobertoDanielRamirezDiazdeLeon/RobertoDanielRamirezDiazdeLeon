@@ -1,15 +1,11 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <math.h>
 #include <iostream>
 
-char altura,i,j,k;
+char altura,i,j;
 
 void main() // Funcion principal
 {
-    /*k = (int)(10);
-    k = 1.5;
-    k = (int)((char)(1.5));*/
-
     printf("\nAltura: ");
     scanf("&i",&altura);
 
@@ -57,5 +53,34 @@ void main() // Funcion principal
         i++;
         printf("\n");
     } while (i <= altura);
+}*/
+
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+char altura,i,j,k;
+int m;
+int p;
+//int b;
+
+void main() // Funcion principal
+{
+    printf("\ndame un numero: ");
+    scanf("&i",&altura);
+
+    if(altura == 3){
+        printf("Hola");
+    }
+    else
+    {
+        if(altura == 5){
+            printf("5");
+        }
+        else
+        {
+            printf("Cualquier cosa");
+        }
+    }
+
 
 }

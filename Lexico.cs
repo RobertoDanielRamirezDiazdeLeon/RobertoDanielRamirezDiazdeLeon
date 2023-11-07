@@ -60,17 +60,24 @@ namespace Sintaxis_2
         };
         protected StreamReader archivo;
         protected StreamWriter log;
+        protected StreamWriter asm;
         DateTime myValue = DateTime.Now;
         protected int linea;
         protected int columna;
         protected int caracter;
+        
         public Lexico()
         {
             linea = columna = caracter = 1;
+            asm = new StreamWriter("prueba.asm");
             log = new StreamWriter("prueba.log");
+            log.AutoFlush = true;
+            asm.AutoFlush = true;
+            asm.WriteLine("; Autor: Roberto Daniel Ramírez Díaz de León");
+            asm.WriteLine("; "+myValue.ToShortDateString() + " " + myValue.ToLongTimeString());
             log.WriteLine("Autor: Roberto Daniel Ramírez Díaz de León");
             log.WriteLine(myValue.ToShortDateString() + " " + myValue.ToLongTimeString());
-            log.AutoFlush = true;
+            
             if (File.Exists("prueba.cpp"))
             {
                 archivo = new StreamReader("prueba.cpp");
@@ -83,10 +90,16 @@ namespace Sintaxis_2
         public Lexico(string nombre)
         {
             linea = columna = caracter = 1;
+            
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
+            asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
+            log.AutoFlush = true;
+            asm.AutoFlush = true;
+            asm.WriteLine("; Autor: Roberto Daniel Ramírez Díaz de León");
+            asm.WriteLine("; "+myValue.ToShortDateString() + " " + myValue.ToLongTimeString());
             log.WriteLine("Autor: Roberto Daniel Ramírez Díaz de León");
             log.WriteLine(myValue.ToShortDateString() + " " + myValue.ToLongTimeString());
-            log.AutoFlush = true;
+            
             if (Path.GetExtension(nombre) != ".cpp")
             {
                 throw new Error("El archivo " + nombre + " no tiene extension CPP", log, linea, columna);
@@ -105,6 +118,7 @@ namespace Sintaxis_2
         {
             archivo.Close();
             log.Close();
+            asm.Close();
         }
         private int Columna(char t)
         {
